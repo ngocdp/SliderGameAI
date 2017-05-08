@@ -6,8 +6,6 @@ package ai.partB;
  * 
  **/
 public class Square {
-	private int row;
-	private int column;
 	public int[] position = new int[2];
 	private char type;
 	private boolean occupied;
@@ -15,28 +13,26 @@ public class Square {
 	public Square(int[] position, char type) {
 		this.type = type;
 		this.position = position;
+		switch (type) {
+		case Main.TYPE_H:
+			this.occupied = true;
+			break;
+		case Main.TYPE_V:
+			this.occupied = true;
+			break;
+		case Main.TYPE_B:
+			this.occupied = true;
+			break;
+		case Main.TYPE_F:
+			this.occupied = false;
+			break;
+		}
 	}
 
 	public Square(Square sqr) {
 		this.setPosition(sqr.getPosition());
 		this.setType(sqr.getType());
 		this.setOccupied(sqr.isOccupied());
-	}
-
-	public int getRow() {
-		return row;
-	}
-
-	public void setRow(int row) {
-		this.row = row;
-	}
-
-	public int getColumn() {
-		return column;
-	}
-
-	public void setColumn(int column) {
-		this.column = column;
 	}
 
 	public char getType() {

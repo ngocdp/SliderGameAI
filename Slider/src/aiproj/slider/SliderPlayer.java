@@ -1,3 +1,4 @@
+package aiproj.slider;
 /* * * * * * * * *
  * Slider game player interface specification. Your program should implement
  * this interface so that the Referee can conduct it to play a game of Slider.
@@ -9,7 +10,7 @@
  * created for COMP30024 Artificial Intelligence 2017
  * by Matt Farrugia <matt.farrugia@unimelb.edu.au>
  */
-package aiproj.slider;
+
 
 /**
  * Slider game player interface specification. Your program should implement

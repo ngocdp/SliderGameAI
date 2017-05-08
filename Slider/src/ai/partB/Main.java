@@ -18,8 +18,8 @@ import java.lang.String;
 
 public class Main {
 
-	public static void main(){
-		
+	public static void main() {
+
 	}
 
 	// board of the game
@@ -30,12 +30,18 @@ public class Main {
 	final static char TYPE_V = 'V';
 	final static char TYPE_B = 'B';
 	final static char TYPE_F = '+';
-	
+
 	// Player type
-	public static char p;
+	public static char player;
+	public static char opponent;
 
 	public void init(int dimension, String board_arrangment, char player) {
-		p = player;
+		Main.player = player;
+		if (player == TYPE_H)
+			opponent = TYPE_V;
+		else if (player == TYPE_V)
+			opponent = TYPE_H;
+
 		Scanner data = new Scanner(board_arrangment);
 
 		try {
@@ -48,53 +54,79 @@ public class Main {
 			 */
 			for (int row = dimension - 1; row >= 0; row--) {
 				for (int column = 0; column < dimension; column++) {
-					int[] pos = {column, row};
+					int[] pos = { column, row };
 					char type = data.next().toCharArray()[0];
 					board.cells[column][row] = new Square(pos, type);
+					if (type == TYPE_H)
+						board.setHsquare(board.getHsquare() + 1);
+					if (type == TYPE_V)
+						board.setVsquare(board.getVsquare() + 1);
 				}
 			}
-			
-			//for (Map.Entry<Character, Square> charPieceEntry : board.squares.entrySet()) 
-				//board.update(charPieceEntry.getValue());
 
 			data.close();
 		} catch (InputMismatchException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 	public void moveSquare(int[] oldPos, int[] newPos, Board board) {
-        board.updateSquare(oldPos, newPos);
-    }
+		board.updateSquare(oldPos, newPos);
+	}
 
-	public void update(Move move){
-		int[] oldPos = {move.i, move.j};
-		// Moving UP
-		if (move.d == Move.Direction.UP) {
-			int[] newPos = {move.i, move.j+1};
-			moveSquare(oldPos, newPos, board);
-		}
-		// Moving DOWN
-		else if (move.d == Move.Direction.DOWN) {
-			int[] newPos = {move.i, move.j-1};
-			moveSquare(oldPos, newPos, board);
-		}
-		// Moving LEFT
-		else if (move.d == Move.Direction.LEFT) {
-			int[] newPos = {move.i+1, move.j};
-			moveSquare(oldPos, newPos, board);
-		}// Moving RIGHT
-		else {
-			int[] newPos = {move.i-1, move.j};
-			moveSquare(oldPos, newPos, board);
+	public void update(Move move) {
+		if (move == null) {
+			return;
+		} else {
+			int[] oldPos = { move.i, move.j };
+
+			// Moving UP
+			if (move.d == Move.Direction.UP) {
+				int[] newPos = { move.i, move.j + 1 };
+				moveSquare(oldPos, newPos, board);
+			}
+			// Moving DOWN
+			else if (move.d == Move.Direction.DOWN) {
+				int[] newPos = { move.i, move.j - 1 };
+				moveSquare(oldPos, newPos, board);
+			}
+			// Moving LEFT
+			else if (move.d == Move.Direction.LEFT) {
+				int[] newPos = { move.i + 1, move.j };
+				moveSquare(oldPos, newPos, board);
+			} // Moving RIGHT
+			else {
+				int[] newPos = { move.i - 1, move.j };
+				moveSquare(oldPos, newPos, board);
+			}
 		}
 	}
 
 	public Move move() {
-		// TODO Auto-generated method stub
-		return null;
+
+		Search search = new Search();
+		AlphaBetaNode result = search.search(board);
+		if (result == null) {
+			return null;
+		} else {
+			int[] from = result.getFrom();
+			int[] to = result.getFrom();
+
+			Move move; 
+
+			if (from[1] > to[1]) {
+				move = new Move(from[0], from[1], Move.Direction.LEFT);
+			} else if (from[1] < to[1]) {
+				move = new Move(from[0], from[1], Move.Direction.RIGHT);
+			} else if (from[0] < to[0]) {
+				move = new Move(from[0], from[1], Move.Direction.UP);
+			} else {
+				move = new Move(from[0], from[1], Move.Direction.DOWN);
+			}
+			update(move);
+			return move;
+		}
 	}
 
 }

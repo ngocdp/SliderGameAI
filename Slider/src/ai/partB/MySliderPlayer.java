@@ -19,7 +19,8 @@ public class MySliderPlayer implements SliderPlayer {
 	}
 
 	@Override
-	public Move move() {		
+	public Move move() {
+		
 		return main.move();
 	}
 

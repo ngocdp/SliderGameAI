@@ -1,3 +1,4 @@
+package aiproj.slider;
 /* * * * * * * * *
 a * Slider game driver class 'Referee' along with some internal helper classes
  * Note: you should build your own Board representation classes; you will not
@@ -7,7 +8,7 @@ a * Slider game driver class 'Referee' along with some internal helper classes
  * created for COMP30024 Artificial Intelligence 2017
  * by Matt Farrugia <matt.farrugia@unimelb.edu.au>
  */
-package aiproj.slider;
+
 
 /**
  * Referee class: Driver for a game of Slider Run this class on the command line
