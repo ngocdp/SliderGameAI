@@ -111,7 +111,7 @@ public class Main {
 			return null;
 		} else {
 			int[] from = result.getFrom();
-			int[] to = result.getFrom();
+			int[] to = result.getTo(); // getTo()???
 
 			Move move; 
 
