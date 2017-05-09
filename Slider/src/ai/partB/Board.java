@@ -54,6 +54,18 @@ public class Board {
 		}
 	}
 	
+	public void printBoard() {
+		System.out.println("printBoard func:");
+		for (int j = board_size - 1; j >= 0; j--) {
+			for (int i = 0; i < board_size; i++) {
+				
+				System.out.print(cells[i][j].getType());
+				System.out.print(' ');
+			}
+			System.out.print('\n');
+		}
+	}
+	
 	public boolean finished() {
 		return ((vsquare == 0) || (hsquare == 0) );
 	}

@@ -110,6 +110,7 @@ public class Referee {
 
 	/** Helper function for rendering a board */
 	private static void render(Board board) {
+		System.out.println("Referee board:");
 		System.out.println(board);
 	}
 

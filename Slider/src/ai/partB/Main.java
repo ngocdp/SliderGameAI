@@ -68,6 +68,10 @@ public class Main {
 		} catch (InputMismatchException e) {
 			e.printStackTrace();
 		}
+		
+		board.printBoard();
+		
+
 
 	}
 
@@ -93,11 +97,11 @@ public class Main {
 			}
 			// Moving LEFT
 			else if (move.d == Move.Direction.LEFT) {
-				int[] newPos = { move.i + 1, move.j };
+				int[] newPos = { move.i - 1, move.j };
 				moveSquare(oldPos, newPos, board);
 			} // Moving RIGHT
 			else {
-				int[] newPos = { move.i - 1, move.j };
+				int[] newPos = { move.i + 1, move.j };
 				moveSquare(oldPos, newPos, board);
 			}
 		}
@@ -112,18 +116,23 @@ public class Main {
 		} else {
 			int[] from = result.getFrom();
 			int[] to = result.getTo(); // getTo()???
+			
+			// PRINT FROM AND TO:
+			System.out.println("From ("+ from[0] + "," + from[1] + ") to (" + to[0] + "," + to[1] + ")" );
 
 			Move move; 
 
 			if (from[1] > to[1]) {
-				move = new Move(from[0], from[1], Move.Direction.LEFT);
-			} else if (from[1] < to[1]) {
-				move = new Move(from[0], from[1], Move.Direction.RIGHT);
-			} else if (from[0] < to[0]) {
-				move = new Move(from[0], from[1], Move.Direction.UP);
-			} else {
 				move = new Move(from[0], from[1], Move.Direction.DOWN);
+			} else if (from[1] < to[1]) {
+				move = new Move(from[0], from[1], Move.Direction.UP);
+			} else if (from[0] < to[0]) {
+				move = new Move(from[0], from[1], Move.Direction.RIGHT);
+			} else {
+				move = new Move(from[0], from[1], Move.Direction.LEFT);
 			}
+			
+			System.out.println(move.d);
 			update(move);
 			return move;
 		}
