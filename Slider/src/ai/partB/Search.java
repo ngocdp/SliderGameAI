@@ -14,10 +14,15 @@ public class Search {
 		if (moves.size() == 0)
 				return null;
 		for (AlphaBetaNode n : moves) {
+			
+			// Simulate next board position on that move
 			board.updateSquare(n.getFrom(), n.getTo());
 			n.setValue(alphaBeta(DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, false));
-			if (best == null || n.getValue() >= best.getValue())
+			if (best == null || n.getValue() >= best.getValue()) {
 				best = n;
+			}
+			
+			// Roll back board
 			board.updateSquare(n.getTo(), n.getFrom());
 		}
 		return best;
