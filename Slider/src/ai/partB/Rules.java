@@ -10,9 +10,9 @@ public class Rules {
         Rules.pos = pos;
         Rules.board = board;
         switch (type) {
-            case Main.TYPE_H:
+            case MySliderPlayer.TYPE_H:
                 return hRules();
-            case Main.TYPE_V:
+            case MySliderPlayer.TYPE_V:
                 return vRules();
             default:
                 return null;
@@ -21,7 +21,8 @@ public class Rules {
 	
     private static ArrayList<int[]> vRules() {
         ArrayList<int[]> moves = new ArrayList<int[]>();
-        int[][] target = new int[][]{{0, 1}, {0, -1}, {1, 0}};
+        
+        int[][] target = new int[][]{{0, 1}, {-1, 0}, {1, 0}}; // UP, LEFT, RIGHT
         for (int[] aTarget : target) {
             int[] e = new int[]{pos[0] + aTarget[0], pos[1] + aTarget[1]};
             if (e[1] == board.getBoard_size())
@@ -34,7 +35,8 @@ public class Rules {
     
 	private static ArrayList<int[]> hRules() {
 		ArrayList<int[]> moves = new ArrayList<int[]>();
-		int[][] target = new int[][] { { 0, 1 }, { 1, 0 }, { -1, 0 } };
+		
+		int[][] target = new int[][] { { 0, 1 }, { 1, 0 }, { 0, -1 } }; // UP, RIGHT, DOWN 
 		for (int[] aTarget : target) {
 			int[] e = new int[] { pos[0] + aTarget[0], pos[1] + aTarget[1] };
 			if (e[0] == board.getBoard_size())

@@ -3,7 +3,7 @@ package ai.partB;
 public class Board {
 
 	private int board_size;
-	public char player;
+	//public char player; // not use?
 	public Square[][] cells;
 	private int hsquare = 0, vsquare = 0;
 
@@ -12,22 +12,7 @@ public class Board {
 		this.cells = new Square[board_size][board_size];
 	}
 
-	public boolean isInside(int[] position) {
-		return isInside(position[0], position[1]);
-	}
-
-	public boolean isInside(int x, int y) {
-		return !(x < 0 || x >= board_size || y < 0 || y >= board_size);
-	}
-
-	public boolean isEmpty(int[] position) {
-		return isEmpty(position[0], position[1]);
-	}
-
-	public boolean isEmpty(int x, int y) {
-		return isInside(x, y) && cells[x][y].isOccupied() == false;
-	}
-
+	// not use?
 	public boolean update(Square sqr) {
 		int[] pos = sqr.position;
 		cells[pos[0]][pos[1]] = sqr;
@@ -39,7 +24,10 @@ public class Board {
 		// Check if it is winning move
 		if ((orig.getType() == Main.TYPE_H && newPos[0] == board_size)
 				|| (orig.getType() == Main.TYPE_V && newPos[1] == board_size)) {
+			// update old position
 			cells[oldPos[0]][oldPos[1]] = new Square(oldPos, Main.TYPE_F);
+			
+			// reduce number of players on the board
 			if (orig.getType() == Main.TYPE_H)
 				hsquare -= 1;
 			if (orig.getType() == Main.TYPE_V)
@@ -47,7 +35,6 @@ public class Board {
 		} else {
 			
 			/* Clear original slot and update new slot. */
-
 			cells[oldPos[0]][oldPos[1]] = new Square(oldPos, Main.TYPE_F);;
 			cells[newPos[0]][newPos[1]] = orig;
 			orig.position = newPos;
@@ -64,6 +51,22 @@ public class Board {
 			}
 			System.out.print('\n');
 		}
+	}
+	
+	public boolean isInside(int[] position) {
+		return isInside(position[0], position[1]);
+	}
+
+	public boolean isInside(int x, int y) {
+		return !(x < 0 || x >= board_size || y < 0 || y >= board_size);
+	}
+
+	public boolean isEmpty(int[] position) {
+		return isEmpty(position[0], position[1]);
+	}
+
+	public boolean isEmpty(int x, int y) {
+		return isInside(x, y) && cells[x][y].isOccupied() == false;
 	}
 	
 	public boolean finished() {

@@ -11,9 +11,7 @@ package ai.partB;
 **/
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import aiproj.slider.Move;
-
 import java.lang.String;
 
 public class Main {
@@ -110,7 +108,7 @@ public class Main {
 	public Move move() {
 
 		Search search = new Search();
-		AlphaBetaNode result = search.search(board);
+		AlphaBetaNode result = search.search(board, player);
 		if (result == null) {
 			return null;
 		} else {
@@ -132,7 +130,6 @@ public class Main {
 				move = new Move(from[0], from[1], Move.Direction.LEFT);
 			}
 			
-			System.out.println(move.d);
 			update(move);
 			return move;
 		}

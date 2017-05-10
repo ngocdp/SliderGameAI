@@ -67,6 +67,8 @@ public class Referee {
 
 		// game loop
 		while (!board.finished()) {
+			
+			System.out.println("Player " + turn + " (H=0, V=1)");
 
 			// delay
 			sleep(options.delay);

@@ -11,6 +11,10 @@ public class AlphaBetaNode {
         this.from = from;
         this.to = to;
     }
+    
+    public void printNode() {
+    	System.out.println("Node of " + this.player + ":[value = "+ this.value+"] (" + from[0] + ", " + from[1] + ") ~> (" + to[0] + ", " + to[1] + ")");
+    }
 
 	public char getPlayer() {
 		return player;
