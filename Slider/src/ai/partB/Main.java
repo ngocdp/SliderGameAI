@@ -107,8 +107,8 @@ public class Main {
 
 	public Move move() {
 
-		Search search = new Search();
-		AlphaBetaNode result = search.search(board, player);
+		//Search search = new Search();
+		AlphaBetaNode result = null; //search.search();
 		if (result == null) {
 			return null;
 		} else {

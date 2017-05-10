@@ -60,13 +60,15 @@ public class MySliderPlayer implements SliderPlayer {
 			e.printStackTrace();
 		}
 		
-		board.printBoard();
 	}
 
 	
 
 	@Override
 	public void update(Move move) {
+		System.out.print("Before: ");
+		board.printBoard();
+
 		if (move == null) {
 			return;
 		} else {
@@ -92,6 +94,9 @@ public class MySliderPlayer implements SliderPlayer {
 				moveSquare(oldPos, newPos, board);
 			}
 		}
+		System.out.print("After: ");
+		board.printBoard();
+
 	}
 	
 	public void moveSquare(int[] oldPos, int[] newPos, Board board) {
@@ -101,8 +106,12 @@ public class MySliderPlayer implements SliderPlayer {
 	@Override
 	public Move move() {
 		
-		Search search = new Search();
-		AlphaBetaNode result = search.search(board, player);
+		Search search = new Search(this.player, this.opponent);
+		Board newBoard = new Board(board);
+		if (newBoard != board ) {
+			System.out.println("NOOOOOOOO");
+		}
+		AlphaBetaNode result = search.search(newBoard);
 
 		if (result == null) {
 			return null;

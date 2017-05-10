@@ -11,6 +11,13 @@ public class Board {
 		this.board_size = dimension;
 		this.cells = new Square[board_size][board_size];
 	}
+	
+	public Board(Board cloneBoard) {
+		this.board_size = cloneBoard.board_size;
+		this.cells = cloneBoard.cells;
+		this.hsquare = cloneBoard.hsquare;
+		this.vsquare = cloneBoard.vsquare;
+	}
 
 	// not use?
 	public boolean update(Square sqr) {
