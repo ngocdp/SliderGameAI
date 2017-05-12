@@ -9,7 +9,9 @@ public class Board {
 
 	public Board(int dimension) {
 		this.board_size = dimension;
-		this.cells = new Square[board_size][board_size];
+		this.cells = new Square[board_size+1][board_size+1];
+		this.updateFinishArea();
+		
 	}
 	
 	public Board(Board cloneBoard) {
@@ -27,36 +29,63 @@ public class Board {
 	}
 
 	public void updateSquare(int[] oldPos, int[] newPos) {
+		System.out.println("** UPDATE SQUARE **");
+
 		Square orig = getSquare(oldPos);
+		this.printBoard();
 		// Check if it is winning move
-		if ((orig.getType() == Main.TYPE_H && newPos[0] == board_size)
-				|| (orig.getType() == Main.TYPE_V && newPos[1] == board_size)) {
-			// update old position
-			cells[oldPos[0]][oldPos[1]] = new Square(oldPos, Main.TYPE_F);
+		if ((orig.getType() == MySliderPlayer.TYPE_H && newPos[0] == board_size)
+				|| (orig.getType() == MySliderPlayer.TYPE_V && newPos[1] == board_size)) {
 			
+			System.out.println("===> EXIT/ WINNING MOVE");
+			
+			// update old position
+			cells[oldPos[0]][oldPos[1]] = new Square(oldPos, MySliderPlayer.TYPE_F);
+			cells[newPos[0]][newPos[1]] = orig;
+
 			// reduce number of players on the board
-			if (orig.getType() == Main.TYPE_H)
+			if (orig.getType() == MySliderPlayer.TYPE_H)
 				hsquare -= 1;
-			if (orig.getType() == Main.TYPE_V)
+			if (orig.getType() == MySliderPlayer.TYPE_V)
 				vsquare -= 1;
 		} else {
 			
 			/* Clear original slot and update new slot. */
-			cells[oldPos[0]][oldPos[1]] = new Square(oldPos, Main.TYPE_F);;
+			cells[oldPos[0]][oldPos[1]] = new Square(oldPos, MySliderPlayer.TYPE_F);;
 			cells[newPos[0]][newPos[1]] = orig;
 			orig.position = newPos;
 		}
+		this.printBoard();
+		System.out.println("** FINISH UPDATE SQUARE **");
+
+
 	}
 	
 	public void printBoard() {
 		System.out.println("printBoard func:");
-		for (int j = board_size - 1; j >= 0; j--) {
-			for (int i = 0; i < board_size; i++) {
+		for (int j = board_size; j >= 0; j--) {
+			for (int i = 0; i <=  board_size; i++) {
 				
 				System.out.print(cells[i][j].getType());
 				System.out.print(' ');
 			}
 			System.out.print('\n');
+		}
+	}
+	
+	public void updateFinishArea() {
+		// Add ending position Type_Hash:
+		for (int i=0; i <= board_size; i++) {
+					
+			int[] posRow = {i,board_size};
+			cells[posRow[0]][posRow[1]] = new Square(posRow, MySliderPlayer.TYPE_HASH);
+					
+			int[] posCol = {board_size,i};
+			cells[posCol[0]][posCol[1]] = new Square(posCol, MySliderPlayer.TYPE_HASH);
+					
+			int[] posEdge = {board_size, board_size};
+			cells[posEdge[0]][posEdge[1]] = new Square(posEdge, MySliderPlayer.TYPE_HASH);
+
 		}
 	}
 	

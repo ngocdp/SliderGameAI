@@ -3,7 +3,7 @@ package ai.partB;
 import java.util.ArrayList;
 
 public class Search {
-	private static int DEPTH = 3;
+	private static int DEPTH = 2;
 	private char player;
 	private char opponent;
 	private AlphaBetaNode chosen;
@@ -19,8 +19,8 @@ public class Search {
 		this.chosen = null;
 		
 		// generate all 
-		System.out.print("Search(): ");
-		ArrayList<AlphaBetaNode> moves = generateMovesForAll(board, this.player);
+		System.out.print("Search all move: ");
+		ArrayList<AlphaBetaNode> moves = generateAllMoves(board, this.player);
 		
 		if (moves.size() == 0) {
 			System.out.println("No moves avail");
@@ -33,82 +33,17 @@ public class Search {
 		System.out.println("evalValue = " + evalValue);
 		
 		this.chosen.printNode();
-		return this.chosen;
-		
-		
-//		for (AlphaBetaNode n : moves) {
-//		
-//		// Simulate next board position on that move
-//		board.updateSquare(n.getFrom(), n.getTo());
-//		
-//		// Evaluate the simulating play
-//		int evalValue = alphaBeta(DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-//		n.setValue(evalValue);
-//		//System.out.println("Alpha-beta value return: " + evalValue);
-//		if (best == null || n.getValue() >= best.getValue()) {
-//			best = n;
-//		}
-//		
-//		// Rollback board
-//		board.updateSquare(n.getTo(), n.getFrom());
-//	}
+		return this.chosen; 
 }
+		
+		
 
-//	private int old_alphaBeta(int depth, int alpha, int beta, boolean isMax) {
-//		/* Return evaluation if reaching leaf node or any side won. */
-//		if (depth == 0 || board.finished()) {
-//			System.out.println("Eval()");
-//			return new BoardValue().eval(board, this.player);
-//		}
-//	
-//		ArrayList<AlphaBetaNode> moves = generateMovesForAll(isMax);
-//
-//		synchronized (this) {
-//			for (final AlphaBetaNode n : moves) {
-//				board.updateSquare(n.getFrom(), n.getTo());
-//				/* Is maximizing player? */
-//				final int finalBeta = beta;
-//				final int finalAlpha = alpha;
-//				final int finalDepth = depth;
-//				final int[] temp = new int[1];
-//
-//				if (depth == 2) {
-//					if (isMax) {
-//						new Thread(new Runnable() {
-//							@Override
-//							public void run() {
-//								temp[0] = Math.max(finalAlpha, old_alphaBeta(finalDepth - 1, finalAlpha, finalBeta, false));
-//							}
-//						}).run();
-//						alpha = temp[0];
-//					} else {
-//						new Thread(new Runnable() {
-//							@Override
-//							public void run() {
-//								temp[0] = Math.min(finalBeta, old_alphaBeta(finalDepth - 1, finalAlpha, finalBeta, true));
-//							}
-//						}).run();
-//						beta = temp[0];
-//					}
-//				} else {
-//					if (isMax)
-//						alpha = Math.max(alpha, old_alphaBeta(depth - 1, alpha, beta, false));
-//					else
-//						beta = Math.min(beta, old_alphaBeta(depth - 1, alpha, beta, true));
-//				}
-//				board.updateSquare(n.getTo(), n.getFrom());
-//
-//				/* Cut-off */
-//				if (beta <= alpha)
-//					break;
-//			}
-//		}
-//		return isMax ? alpha : beta;
-//	}
 	
 	
 	// Replaced part as Wiki psudocode: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
 	private int alphaBeta(Board board, int depth, int alpha, int beta, boolean isMax) {
+		System.out.println("***** ALPHABETA *****");
+		
 		int v;
 		/* Return evaluation if reaching maximum depth/ leaf node or any side won or terminal node. */
 		if (depth == 0 || board.finished()) {
@@ -120,7 +55,7 @@ public class Search {
 		if (isMax) {
 			v = Integer.MIN_VALUE;
 			System.out.print("MAX: [depth = "+ depth+"]: ");
-			for (AlphaBetaNode child : this.generateMovesForAll(board, this.player)) {
+			for (AlphaBetaNode child : this.generateAllMoves(board, this.player)) {
 				
 				// Simulate child node move
 				Board child_board = new Board(board);
@@ -139,10 +74,13 @@ public class Search {
 				alpha = Math.max(alpha, v);
 				
 				// Rollback board: 
+				System.out.println("***** ROLL *****");
+
 				child_board.updateSquare(child.getTo(), child.getFrom());
 				
 				// Cut-off
 				if (beta <= alpha) {
+					System.out.println("***** Prune *****");
 					break;
 				}
 			}
@@ -155,7 +93,7 @@ public class Search {
 			v = Integer.MAX_VALUE;
 			
 			System.out.print("MIN: [depth = "+ depth+"]: ");
-			for (AlphaBetaNode child : this.generateMovesForAll(board, this.opponent)) {
+			for (AlphaBetaNode child : this.generateAllMoves(board, this.opponent)) {
 				
 				// Simulate child node move
 				Board child_board = board;
@@ -165,6 +103,8 @@ public class Search {
 				beta = Math.min(beta, v);
 				
 				// Rollback board: 
+				System.out.println("***** ROLL *****");
+
 				child_board.updateSquare(child.getTo(), child.getFrom());
 				
 				// Cut-off
@@ -178,7 +118,7 @@ public class Search {
 
 	
 	// Generate all moves of Player "player" from 'board' condition
-	private ArrayList<AlphaBetaNode> generateMovesForAll(Board board, char player) {
+	private ArrayList<AlphaBetaNode> generateAllMoves(Board board, char player) {
 		System.out.print("{" + player + "}");
 		
 		ArrayList<AlphaBetaNode> moves = new ArrayList<AlphaBetaNode>();
@@ -220,5 +160,73 @@ public class Search {
 	}
 	
 
+//	for (AlphaBetaNode n : moves) {
+//	
+//	// Simulate next board position on that move
+//	board.updateSquare(n.getFrom(), n.getTo());
+//	
+//	// Evaluate the simulating play
+//	int evalValue = alphaBeta(DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+//	n.setValue(evalValue);
+//	//System.out.println("Alpha-beta value return: " + evalValue);
+//	if (best == null || n.getValue() >= best.getValue()) {
+//		best = n;
+//	}
+//	
+//	// Rollback board
+//	board.updateSquare(n.getTo(), n.getFrom());
+//}
+
+//private int old_alphaBeta(int depth, int alpha, int beta, boolean isMax) {
+//	/* Return evaluation if reaching leaf node or any side won. */
+//	if (depth == 0 || board.finished()) {
+//		System.out.println("Eval()");
+//		return new BoardValue().eval(board, this.player);
+//	}
+//
+//	ArrayList<AlphaBetaNode> moves = generateAllMoves(isMax);
+//
+//	synchronized (this) {
+//		for (final AlphaBetaNode n : moves) {
+//			board.updateSquare(n.getFrom(), n.getTo());
+//			/* Is maximizing player? */
+//			final int finalBeta = beta;
+//			final int finalAlpha = alpha;
+//			final int finalDepth = depth;
+//			final int[] temp = new int[1];
+//
+//			if (depth == 2) {
+//				if (isMax) {
+//					new Thread(new Runnable() {
+//						@Override
+//						public void run() {
+//							temp[0] = Math.max(finalAlpha, old_alphaBeta(finalDepth - 1, finalAlpha, finalBeta, false));
+//						}
+//					}).run();
+//					alpha = temp[0];
+//				} else {
+//					new Thread(new Runnable() {
+//						@Override
+//						public void run() {
+//							temp[0] = Math.min(finalBeta, old_alphaBeta(finalDepth - 1, finalAlpha, finalBeta, true));
+//						}
+//					}).run();
+//					beta = temp[0];
+//				}
+//			} else {
+//				if (isMax)
+//					alpha = Math.max(alpha, old_alphaBeta(depth - 1, alpha, beta, false));
+//				else
+//					beta = Math.min(beta, old_alphaBeta(depth - 1, alpha, beta, true));
+//			}
+//			board.updateSquare(n.getTo(), n.getFrom());
+//
+//			/* Cut-off */
+//			if (beta <= alpha)
+//				break;
+//		}
+//	}
+//	return isMax ? alpha : beta;
+//}
 
 }

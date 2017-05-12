@@ -17,6 +17,8 @@ public class MySliderPlayer implements SliderPlayer {
 	final static char TYPE_V = 'V';
 	final static char TYPE_B = 'B';
 	final static char TYPE_F = '+';
+	final static char TYPE_HASH = '#';
+
 
 	// Player type
 	private char player;
@@ -54,6 +56,7 @@ public class MySliderPlayer implements SliderPlayer {
 						board.setVsquare(board.getVsquare() + 1);
 				}
 			}
+			
 
 			data.close();
 		} catch (InputMismatchException e) {
@@ -94,8 +97,15 @@ public class MySliderPlayer implements SliderPlayer {
 				moveSquare(oldPos, newPos, board);
 			}
 		}
+		
 		System.out.print("After: ");
 		board.printBoard();
+		
+		this.board.updateFinishArea();
+		System.out.print("After Area clear: ");
+		board.printBoard();
+		
+		
 
 	}
 	
