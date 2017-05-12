@@ -98,8 +98,8 @@ public class MySliderPlayer implements SliderPlayer {
 			}
 		}
 		
-		System.out.print("After: ");
-		board.printBoard();
+//		System.out.print("After: ");
+//		board.printBoard();
 		
 		this.board.updateFinishArea();
 		System.out.print("After Area clear: ");
