@@ -28,7 +28,8 @@ public class Board {
 		return true;
 	}
 
-	public void updateSquare(int[] oldPos, int[] newPos) {
+	public boolean updateSquare(int[] oldPos, int[] newPos) {
+		boolean isFinishMove = false;
 		System.out.println("** UPDATE SQUARE **");
 
 		Square orig = getSquare(oldPos);
@@ -48,6 +49,8 @@ public class Board {
 				hsquare -= 1;
 			if (orig.getType() == MySliderPlayer.TYPE_V)
 				vsquare -= 1;
+			
+			isFinishMove = true;
 		} else {
 			
 			/* Clear original slot and update new slot. */
@@ -56,8 +59,9 @@ public class Board {
 			orig.position = newPos;
 		}
 		this.printBoard();
+		System.out.println("** H_Sq = " + this.hsquare + " V_Sq = " + this.vsquare + " **");
 		System.out.println("** FINISH UPDATE SQUARE **");
-
+		return isFinishMove;
 
 	}
 	
@@ -87,6 +91,22 @@ public class Board {
 			cells[posEdge[0]][posEdge[1]] = new Square(posEdge, MySliderPlayer.TYPE_HASH);
 
 		}
+	}
+	
+	public void rollback(boolean isFinishMove, char player, int[] oldPos, int[] newPos) {
+		System.out.println("***** ROLLBACK *****");
+		
+		if (isFinishMove) {
+			if (player == MySliderPlayer.TYPE_V) {
+				this.vsquare++;
+			} else {
+				this.hsquare++;
+			}
+		}
+		
+		this.updateSquare(oldPos, newPos);
+		
+		
 	}
 	
 	public boolean isInside(int[] position) {

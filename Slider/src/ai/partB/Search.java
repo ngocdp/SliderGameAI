@@ -45,6 +45,7 @@ public class Search {
 		System.out.println("***** ALPHABETA *****");
 		
 		int v;
+		boolean isFinishMove;
 		/* Return evaluation if reaching maximum depth/ leaf node or any side won or terminal node. */
 		if (depth == 0 || board.finished()) {
 			return new BoardValue().eval(board, this.player);
@@ -59,7 +60,7 @@ public class Search {
 				
 				// Simulate child node move
 				Board child_board = new Board(board);
-				child_board.updateSquare(child.getFrom(), child.getTo());
+				isFinishMove = child_board.updateSquare(child.getFrom(), child.getTo());
 				
 				int alphaBetaV = this.alphaBeta(child_board, depth-1, alpha, beta, false);
 				
@@ -74,9 +75,8 @@ public class Search {
 				alpha = Math.max(alpha, v);
 				
 				// Rollback board: 
-				System.out.println("***** ROLL *****");
-
-				child_board.updateSquare(child.getTo(), child.getFrom());
+				child_board.rollback(isFinishMove, child.getPlayer(),child.getTo(), child.getFrom());
+				
 				
 				// Cut-off
 				if (beta <= alpha) {
@@ -97,15 +97,14 @@ public class Search {
 				
 				// Simulate child node move
 				Board child_board = board;
-				child_board.updateSquare(child.getFrom(), child.getTo());
+				isFinishMove = child_board.updateSquare(child.getFrom(), child.getTo());
 				
 				v = Math.min(v, this.alphaBeta(child_board, depth-1, alpha, beta, true));
 				beta = Math.min(beta, v);
 				
 				// Rollback board: 
-				System.out.println("***** ROLL *****");
 
-				child_board.updateSquare(child.getTo(), child.getFrom());
+				child_board.rollback(isFinishMove, child.getPlayer(),child.getTo(), child.getFrom());
 				
 				// Cut-off
 				if (beta <= alpha) {
