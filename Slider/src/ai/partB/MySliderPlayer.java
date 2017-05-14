@@ -69,8 +69,8 @@ public class MySliderPlayer implements SliderPlayer {
 
 	@Override
 	public void update(Move move) {
-		System.out.print("Before: ");
-		board.printBoard();
+		//System.out.print("Before: ");
+		//board.printBoard();
 
 		if (move == null) {
 			return;
@@ -101,9 +101,9 @@ public class MySliderPlayer implements SliderPlayer {
 //		System.out.print("After: ");
 //		board.printBoard();
 		
-		this.board.updateFinishArea();
-		System.out.print("After Area clear: ");
-		board.printBoard();
+		//this.board.updateFinishArea();
+		System.out.println("After Area clear: ");
+		board.printMainBoard();
 		
 		
 
@@ -118,9 +118,7 @@ public class MySliderPlayer implements SliderPlayer {
 		
 		Search search = new Search(this.player, this.opponent);
 		Board newBoard = new Board(board);
-		if (newBoard != board ) {
-			System.out.println("NOOOOOOOO");
-		}
+
 		AlphaBetaNode result = search.search(newBoard);
 
 		if (result == null) {
