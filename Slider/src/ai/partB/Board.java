@@ -10,7 +10,7 @@ public class Board {
 	public Board(int dimension) {
 		this.board_size = dimension;
 		this.cells = new Square[board_size+1][board_size+1];
-		this.updateFinishArea();
+		this.updateFinishArea(false);
 		
 	}
 	
@@ -30,7 +30,7 @@ public class Board {
 
 	public boolean updateSquare(int[] oldPos, int[] newPos) {
 		boolean isFinishMove = false;
-		System.out.println("** UPDATE SQUARE **");
+		//System.out.println("** UPDATE SQUARE **");
 
 		Square orig = getSquare(oldPos);
 		this.printBoard();
@@ -38,11 +38,14 @@ public class Board {
 		if ((orig.getType() == MySliderPlayer.TYPE_H && newPos[0] == board_size)
 				|| (orig.getType() == MySliderPlayer.TYPE_V && newPos[1] == board_size)) {
 			
-			System.out.println("===> EXIT/ WINNING MOVE");
+			//System.out.println("===> EXIT/ WINNING MOVE");
 			
 			// update old position
 			cells[oldPos[0]][oldPos[1]] = new Square(oldPos, MySliderPlayer.TYPE_F);
 			cells[newPos[0]][newPos[1]] = orig;
+			
+
+			
 
 			// reduce number of players on the board
 			if (orig.getType() == MySliderPlayer.TYPE_H)
@@ -58,9 +61,10 @@ public class Board {
 			cells[newPos[0]][newPos[1]] = orig;
 			orig.position = newPos;
 		}
+		
 		this.printBoard();
-		System.out.println("** H_Sq = " + this.hsquare + " V_Sq = " + this.vsquare + " **");
-		System.out.println("** FINISH UPDATE SQUARE **");
+		//System.out.println("** H_Sq = " + this.hsquare + " V_Sq = " + this.vsquare + " **");
+		//System.out.println("** FINISH UPDATE SQUARE **");
 		return isFinishMove;
 
 	}
@@ -77,25 +81,46 @@ public class Board {
 		}
 	}
 	
-	public void updateFinishArea() {
+	public void printMainBoard() {
+		//System.out.println("printBoard func:");
+		for (int j = board_size; j >= 0; j--) {
+			for (int i = 0; i <=  board_size; i++) {
+				
+				//System.out.print(cells[i][j].getType());
+				//System.out.print(' ');
+			}
+			//System.out.print('\n');
+		}
+	}
+	
+	public void updateFinishArea(boolean isRollback) {
 		// Add ending position Type_Hash:
 		for (int i=0; i <= board_size; i++) {
+			
+			if (isRollback) {
+				int[] posRow = {i,board_size};
+				cells[posRow[0]][posRow[1]] = new Square(posRow, MySliderPlayer.TYPE_V);
+						
+				int[] posCol = {board_size,i};
+				cells[posCol[0]][posCol[1]] = new Square(posCol, MySliderPlayer.TYPE_H);
+			} else {
+				int[] posRow = {i,board_size};
+				cells[posRow[0]][posRow[1]] = new Square(posRow, MySliderPlayer.TYPE_F);
+						
+				int[] posCol = {board_size,i};
+				cells[posCol[0]][posCol[1]] = new Square(posCol, MySliderPlayer.TYPE_F);
+			}
+			
 					
-			int[] posRow = {i,board_size};
-			cells[posRow[0]][posRow[1]] = new Square(posRow, MySliderPlayer.TYPE_HASH);
-					
-			int[] posCol = {board_size,i};
-			cells[posCol[0]][posCol[1]] = new Square(posCol, MySliderPlayer.TYPE_HASH);
-					
-			int[] posEdge = {board_size, board_size};
-			cells[posEdge[0]][posEdge[1]] = new Square(posEdge, MySliderPlayer.TYPE_HASH);
+//			int[] posEdge = {board_size, board_size};
+//			cells[posEdge[0]][posEdge[1]] = new FinishSquare(posEdge, MySliderPlayer.TYPE_HASH);
 
 		}
 	}
 	
 	public void rollback(boolean isFinishMove, char player, int[] oldPos, int[] newPos) {
-		System.out.println("***** ROLLBACK *****");
-		
+		//System.out.println("***** ROLLBACK *****");
+		this.updateFinishArea(true);
 		if (isFinishMove) {
 			if (player == MySliderPlayer.TYPE_V) {
 				this.vsquare++;
@@ -106,7 +131,7 @@ public class Board {
 		
 		this.updateSquare(oldPos, newPos);
 		
-		
+		this.updateFinishArea(false);		
 	}
 	
 	public boolean isInside(int[] position) {

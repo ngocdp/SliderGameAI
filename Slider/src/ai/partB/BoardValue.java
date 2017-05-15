@@ -12,7 +12,7 @@ public class BoardValue {
 		this.values[1] = 0;
 	}
 
-	public int eval(Board board, char player) {
+	public int eval(Board board, char player, boolean justFinish) {
 		char cellType;
 		int bsize = board.getBoard_size();
 		for (int row = 0; row < bsize; row++) {
@@ -21,31 +21,44 @@ public class BoardValue {
 				
 				if (cellType == MySliderPlayer.TYPE_V) {
 					// score on position of sliders on board
-					values[V_i] += (bsize * column + bsize * row * 2);	
+					values[V_i] += (bsize * Math.abs(column -(int)bsize/2) + bsize * (row+1) * 2);	
 				}	
 				if (cellType == MySliderPlayer.TYPE_H) {
-					values[H_i] += (bsize * row + bsize * column * 2);
+					values[H_i] += (bsize * Math.abs(row -(int)bsize/2) + bsize * (column+1) * 2);
 				
 				}		
 			}
 		}
-		
-		
+		int addon;
 		switch (player) {
 		case Main.TYPE_V:
+
 			// add value for exiting move
-			System.out.println("**Finish move add on: " + ((bsize-1) - board.getVsquare()) * 100);
-			values[V_i] += ((bsize-1) - board.getVsquare()) * 100;
-			System.out.print("==> Value: " +values[V_i] + " [V] \n");
+			if (justFinish) {
+				addon = ((bsize) - board.getVsquare())* bsize * bsize * bsize * bsize;
+
+				//System.out.println("**Finish move add on: " + addon);
+				values[V_i] += addon ;
+			} else {
+				//System.out.println("**Finish move add on: " + 0);
+			}
+			
+			//System.out.print("==> Value: " +(values[V_i]) + " [V] \n");
 
 			return values[V_i];
 			
 		case Main.TYPE_H:
 			// add value for exiting move
-			System.out.println("**Finish move add on: " + ((bsize-1) - board.getHsquare()) * 100);
+			if (justFinish) {
+				addon = ((bsize) - board.getHsquare())* bsize * bsize * bsize * bsize;
 
-			values[H_i] += ((bsize-1) - board.getHsquare()) * 100;
-			System.out.print("==> " +values[H_i] + "[H] \n");
+				//System.out.println("**Finish move add on: " +  addon);
+
+				values[H_i] +=  addon;
+			} else {
+				//System.out.println("**Finish move add on: " + 0);
+			}
+			//System.out.print("==> Value: " +(values[H_i]) + "[H] \n");
 
 			return values[H_i];
 			
