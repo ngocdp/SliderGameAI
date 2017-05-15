@@ -3,7 +3,7 @@ package ai.partB;
 import java.util.ArrayList;
 
 public class Search {
-	private static int DEPTH = 5 ;
+	private static int DEPTH = 7;
 	private char player;
 	private char opponent;
 	private AlphaBetaNode chosen;
@@ -27,9 +27,14 @@ public class Search {
 			return null;
 		}
 		
+		if (moves.size() == 1) {
+			System.out.println("Only 1 move avail");
+			return moves.get(0);
+		}
+		
 
 		// Replaced part as Wiki psudocode: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
-		int evalValue = alphaBeta(new Board(board), DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+		int evalValue = alphaBeta(new Board(board), DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
 		//System.out.println("evalValue = " + evalValue);
 		if (this.chosen != null) {
 			this.chosen.printNode();
@@ -42,17 +47,17 @@ public class Search {
 	
 	
 	// Replaced part as Wiki psudocode: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
-	private int alphaBeta(Board board, int depth, int alpha, int beta, boolean isMax) {
+	private int alphaBeta(Board board, int depth, int alpha, int beta, boolean isMax, boolean justFinish) {
 		//System.out.println("***** ALPHABETA *****");
+		
+		
+		/* Return evaluation if reaching maximum depth/ leaf node or any side won or terminal node. */
+		if (depth == 0 || board.finished()) {
+			return new BoardValue().eval(board, this.player, justFinish);
+		}
 		
 		int v;
 		boolean isFinishMove;
-		/* Return evaluation if reaching maximum depth/ leaf node or any side won or terminal node. */
-		if (depth == 0 || board.finished()) {
-			return new BoardValue().eval(board, this.player);
-		}
-		
-		
 		// Maximizer
 		if (isMax) {
 			v = Integer.MIN_VALUE;
@@ -63,7 +68,7 @@ public class Search {
 				Board child_board = new Board(board);
 				isFinishMove = child_board.updateSquare(child.getFrom(), child.getTo());
 				
-				int alphaBetaV = this.alphaBeta(child_board, depth-1, alpha, beta, false);
+				int alphaBetaV = this.alphaBeta(child_board, depth-1, alpha, beta, false, isFinishMove);
 				
 				if (alphaBetaV > v ) {
 					v = alphaBetaV;
@@ -100,7 +105,7 @@ public class Search {
 				Board child_board = board;
 				isFinishMove = child_board.updateSquare(child.getFrom(), child.getTo());
 				
-				v = Math.min(v, this.alphaBeta(child_board, depth-1, alpha, beta, true));
+				v = Math.min(v, this.alphaBeta(child_board, depth-1, alpha, beta, true, isFinishMove));
 				beta = Math.min(beta, v);
 				
 				// Rollback board: 
