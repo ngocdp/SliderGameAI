@@ -106,8 +106,8 @@ public class MySliderPlayer implements SliderPlayer {
 //		board.printBoard();
 		
 		//this.board.updateFinishArea();
-		System.out.println("After Area clear: ");
-		board.printMainBoard();
+		//System.out.println("After Area clear: ");
+		//board.printMainBoard();
 		
 		
 

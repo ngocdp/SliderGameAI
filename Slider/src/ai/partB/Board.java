@@ -51,7 +51,7 @@ public class Board {
 		//System.out.println("** UPDATE SQUARE **");
 
 		Square orig = getSquare(oldPos);
-		this.printBoard();
+		//this.printBoard();
 		// Check if it is winning move
 		if ((orig.getType() == MySliderPlayer.TYPE_H && newPos[0] == board_size)
 				|| (orig.getType() == MySliderPlayer.TYPE_V && newPos[1] == board_size)) {
