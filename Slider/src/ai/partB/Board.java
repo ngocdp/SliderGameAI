@@ -1,7 +1,7 @@
 package ai.partB;
 
 /**
- * COMP30004 Artificial Intelligence Assignment 1
+ * COMP30004 Artificial Intelligence Assignment (Part B)
  * Group member: 
  * Dinh Phuc Ngoc - 784736 
  * Duy Vu - 741907

@@ -1,7 +1,7 @@
 package ai.partB;
 
 /**
- * COMP30004 Artificial Intelligence Assignment 1
+ * COMP30004 Artificial Intelligence Assignment (Part B)
  * Group member: 
  * Dinh Phuc Ngoc - 784736 
  * Duy Vu - 741907
@@ -14,6 +14,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.lang.String;
 
+/**
+ * MySliderPlayer Class: this is the main class of this project. It will implement the SliderPlayer.
+ */
+
 public class MySliderPlayer implements SliderPlayer {
 	
 	// board of the game
@@ -24,18 +28,15 @@ public class MySliderPlayer implements SliderPlayer {
 	final static char TYPE_V = 'V';
 	final static char TYPE_B = 'B';
 	final static char TYPE_F = '+';
-	final static char TYPE_HASH = '#';
 
 
 	// Player type
 	private char player;
 	private char opponent;
 	
-	//Main main = new Main();
-	
-	
 	@Override
 	public void init(int dimension, String board_arrangment, char player) {
+		// determine the my player and opponent player
 		this.player = player;
 		if (player == TYPE_H)
 			this.opponent = TYPE_V;
@@ -63,25 +64,21 @@ public class MySliderPlayer implements SliderPlayer {
 						board.setVsquare(board.getVsquare() + 1);
 				}
 			}
-			
-
 			data.close();
 		} catch (InputMismatchException e) {
 			e.printStackTrace();
 		}
-		
 	}
-
-	
 
 	@Override
 	public void update(Move move) {
 		//System.out.print("Before: ");
 		//board.printBoard();
-
+		// if no move is passed from Referee, return null (no change to the board)
 		if (move == null) {
 			return;
 		} else {
+			// indicate the position of the square that being moved
 			int[] oldPos = { move.i, move.j };
 
 			// Moving UP
@@ -116,6 +113,12 @@ public class MySliderPlayer implements SliderPlayer {
 
 	}
 	
+	/**
+	 * Moving the Square from a position to other position on the board
+	 * @param oldPos: old position
+	 * @param newPos: new position that we want it to move to
+	 * @param board: the current board
+	 */
 	public void moveSquare(int[] oldPos, int[] newPos, Board board) {
 		board.updateSquare(oldPos, newPos);
 	}
@@ -154,10 +157,16 @@ public class MySliderPlayer implements SliderPlayer {
 		}	
 	}
 	
+	/**
+	 * @return the character of my player
+	 */
 	public char getPlayer() {
 		return player;
 	}
 
+	/**
+	 * @return the character of opponent
+	 */
 	public char getOpponent() {
 		return opponent;
 	}
