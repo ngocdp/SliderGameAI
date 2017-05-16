@@ -1,4 +1,4 @@
-package ai.partB;
+package ai.dumb;
 
 public class Board {
 
@@ -30,7 +30,7 @@ public class Board {
 
 	public boolean updateSquare(int[] oldPos, int[] newPos) {
 		boolean isFinishMove = false;
-		System.out.println("** UPDATE SQUARE **");
+		//System.out.println("** UPDATE SQUARE **");
 
 		Square orig = getSquare(oldPos);
 		this.printBoard();
@@ -38,7 +38,7 @@ public class Board {
 		if ((orig.getType() == MySliderPlayer.TYPE_H && newPos[0] == board_size)
 				|| (orig.getType() == MySliderPlayer.TYPE_V && newPos[1] == board_size)) {
 			
-			System.out.println("===> EXIT/ WINNING MOVE");
+			//System.out.println("===> EXIT/ WINNING MOVE");
 			
 			// update old position
 			cells[oldPos[0]][oldPos[1]] = new Square(oldPos, MySliderPlayer.TYPE_F);
@@ -59,8 +59,8 @@ public class Board {
 			orig.position = newPos;
 		}
 		this.printBoard();
-		System.out.println("** H_Sq = " + this.hsquare + " V_Sq = " + this.vsquare + " **");
-		System.out.println("** FINISH UPDATE SQUARE **");
+		//System.out.println("** H_Sq = " + this.hsquare + " V_Sq = " + this.vsquare + " **");
+		//System.out.println("** FINISH UPDATE SQUARE **");
 		return isFinishMove;
 
 	}
@@ -94,7 +94,7 @@ public class Board {
 	}
 	
 	public void rollback(boolean isFinishMove, char player, int[] oldPos, int[] newPos) {
-		System.out.println("***** ROLLBACK *****");
+		//System.out.println("***** ROLLBACK *****");
 		
 		if (isFinishMove) {
 			if (player == MySliderPlayer.TYPE_V) {

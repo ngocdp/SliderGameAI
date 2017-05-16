@@ -1,4 +1,4 @@
-package ai.partB;
+package ai.dumb;
 
 import aiproj.slider.Move;
 import aiproj.slider.SliderPlayer;
@@ -69,7 +69,7 @@ public class MySliderPlayer implements SliderPlayer {
 
 	@Override
 	public void update(Move move) {
-		System.out.print("Before: ");
+		//System.out.print("Before: ");
 		board.printBoard();
 
 		if (move == null) {
@@ -102,7 +102,7 @@ public class MySliderPlayer implements SliderPlayer {
 //		board.printBoard();
 		
 		this.board.updateFinishArea();
-		System.out.print("After Area clear: ");
+		//System.out.print("After Area clear: ");
 		board.printBoard();
 		
 		
@@ -119,7 +119,7 @@ public class MySliderPlayer implements SliderPlayer {
 		Search search = new Search(this.player, this.opponent);
 		Board newBoard = new Board(board);
 		if (newBoard != board ) {
-			System.out.println("NOOOOOOOO");
+			//System.out.println("NOOOOOOOO");
 		}
 		AlphaBetaNode result = search.search(newBoard);
 

@@ -31,7 +31,7 @@ public class BoardValue {
 		}
 		int addon;
 		switch (player) {
-		case Main.TYPE_V:
+		case MySliderPlayer.TYPE_V:
 
 			// add value for exiting move
 			if (justFinish) {
@@ -47,7 +47,7 @@ public class BoardValue {
 
 			return values[V_i];
 			
-		case Main.TYPE_H:
+		case MySliderPlayer.TYPE_H:
 			// add value for exiting move
 			if (justFinish) {
 				addon = ((bsize) - board.getHsquare())* bsize * bsize * bsize * bsize;

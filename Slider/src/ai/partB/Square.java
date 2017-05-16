@@ -14,16 +14,16 @@ public class Square {
 		this.type = type;
 		this.position = position;
 		switch (type) {
-		case Main.TYPE_H:
+		case MySliderPlayer.TYPE_H:
 			this.occupied = true;
 			break;
-		case Main.TYPE_V:
+		case MySliderPlayer.TYPE_V:
 			this.occupied = true;
 			break;
-		case Main.TYPE_B:
+		case MySliderPlayer.TYPE_B:
 			this.occupied = true;
 			break;
-		case Main.TYPE_F:
+		case MySliderPlayer.TYPE_F:
 			this.occupied = false;
 			break;
 		}

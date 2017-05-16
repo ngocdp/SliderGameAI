@@ -1,4 +1,4 @@
-package ai.partB;
+package ai.dumb;
 
 public class BoardValue {
 
@@ -34,18 +34,18 @@ public class BoardValue {
 		switch (player) {
 		case Main.TYPE_V:
 			// add value for exiting move
-			System.out.println("**Finish move add on: " + ((bsize-1) - board.getVsquare()) * 100);
-			values[V_i] += ((bsize-1) - board.getVsquare()) * 100;
-			System.out.print("==> Value: " +values[V_i] + " [V] \n");
+			//System.out.println("**Finish move add on: " + ((bsize-1) - board.getVsquare()) * 100);
+			values[V_i] += ((bsize-1) - board.getVsquare()) * bsize*bsize*bsize;
+			//System.out.print("==> Value: " +values[V_i] + " [V] \n");
 
 			return values[V_i];
 			
 		case Main.TYPE_H:
 			// add value for exiting move
-			System.out.println("**Finish move add on: " + ((bsize-1) - board.getHsquare()) * 100);
+			//System.out.println("**Finish move add on: " + ((bsize-1) - board.getHsquare()) * 100);
 
-			values[H_i] += ((bsize-1) - board.getHsquare()) * 100;
-			System.out.print("==> " +values[H_i] + "[H] \n");
+			values[H_i] += ((bsize-1) - board.getHsquare()) * bsize*bsize*bsize;
+			//System.out.print("==> " +values[H_i] + "[H] \n");
 
 			return values[H_i];
 			

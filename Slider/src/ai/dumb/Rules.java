@@ -1,4 +1,4 @@
-package ai.partB;
+package ai.dumb;
 
 import java.util.ArrayList;
 

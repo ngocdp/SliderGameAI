@@ -1,9 +1,9 @@
-package ai.partB;
+package ai.dumb;
 
 import java.util.ArrayList;
 
 public class Search {
-	private static int DEPTH = 2;
+	private static int DEPTH = 7;
 	private char player;
 	private char opponent;
 	private AlphaBetaNode chosen;
@@ -19,7 +19,7 @@ public class Search {
 		this.chosen = null;
 		
 		// generate all 
-		System.out.print("Search all move: ");
+		//System.out.print("Search all move: ");
 		ArrayList<AlphaBetaNode> moves = generateAllMoves(board, this.player);
 		
 		if (moves.size() == 0) {
@@ -30,7 +30,7 @@ public class Search {
 
 		// Replaced part as Wiki psudocode: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
 		int evalValue = alphaBeta(new Board(board), DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-		System.out.println("evalValue = " + evalValue);
+		//System.out.println("evalValue = " + evalValue);
 		
 		this.chosen.printNode();
 		return this.chosen; 
@@ -42,7 +42,7 @@ public class Search {
 	
 	// Replaced part as Wiki psudocode: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
 	private int alphaBeta(Board board, int depth, int alpha, int beta, boolean isMax) {
-		System.out.println("***** ALPHABETA *****");
+		//System.out.println("***** ALPHABETA *****");
 		
 		int v;
 		boolean isFinishMove;
@@ -55,7 +55,7 @@ public class Search {
 		// Maximizer
 		if (isMax) {
 			v = Integer.MIN_VALUE;
-			System.out.print("MAX: [depth = "+ depth+"]: ");
+			//System.out.print("MAX: [depth = "+ depth+"]: ");
 			for (AlphaBetaNode child : this.generateAllMoves(board, this.player)) {
 				
 				// Simulate child node move
@@ -80,7 +80,7 @@ public class Search {
 				
 				// Cut-off
 				if (beta <= alpha) {
-					System.out.println("***** Prune *****");
+					//System.out.println("***** Prune *****");
 					break;
 				}
 			}
@@ -92,7 +92,7 @@ public class Search {
 			
 			v = Integer.MAX_VALUE;
 			
-			System.out.print("MIN: [depth = "+ depth+"]: ");
+			//System.out.print("MIN: [depth = "+ depth+"]: ");
 			for (AlphaBetaNode child : this.generateAllMoves(board, this.opponent)) {
 				
 				// Simulate child node move
@@ -118,12 +118,12 @@ public class Search {
 	
 	// Generate all moves of Player "player" from 'board' condition
 	private ArrayList<AlphaBetaNode> generateAllMoves(Board board, char player) {
-		System.out.print("{" + player + "}");
+		//System.out.print("{" + player + "}");
 		
 		ArrayList<AlphaBetaNode> moves = new ArrayList<AlphaBetaNode>();
 		
 		for (int row = board.getBoard_size() - 1; row >= 0; row--) {
-			for (int column = 0; column < board.getBoard_size(); column++) {
+			for (int column = board.getBoard_size() - 1; column >=0; column--) {
 				Square sqr = board.getSquare(column, row);
 			
 //				char opponent;
@@ -142,7 +142,7 @@ public class Search {
 					for (int[] nxt : Rules.getNextMove(sqr.getType(), sqr.getPosition(), board)) {
 						// only takes moves of the current player:
 						
-						System.out.print(" (" + sqr.getPosition()[0] + ", " + sqr.getPosition()[1] + ") " + "->(" + nxt[0] + ", " + nxt[1] + ") ||");
+						//System.out.print(" (" + sqr.getPosition()[0] + ", " + sqr.getPosition()[1] + ") " + "->(" + nxt[0] + ", " + nxt[1] + ") ||");
 						moves.add(new AlphaBetaNode(sqr.getType(), sqr.getPosition(), nxt));
 						
 					}
@@ -153,7 +153,7 @@ public class Search {
 			}
 		}
 
-		System.out.print("\n");
+		//System.out.print("\n");
 
 		return moves;
 	}

@@ -1,4 +1,4 @@
-package ai.partB;
+package ai.dumb;
 
 /**
  * COMP30004 Artificial Intelligence Assignment 1 Group member: Dinh Phuc Ngoc -
