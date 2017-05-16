@@ -1,5 +1,13 @@
 package ai.partB;
 
+/**
+ * COMP30004 Artificial Intelligence Assignment 1
+ * Group member: 
+ * Dinh Phuc Ngoc - 784736 
+ * Duy Vu - 741907
+ * 
+ **/
+
 import aiproj.slider.Move;
 import aiproj.slider.SliderPlayer;
 import java.util.InputMismatchException;

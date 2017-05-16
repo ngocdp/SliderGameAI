@@ -1,9 +1,17 @@
 package ai.partB;
 
+/**
+ * COMP30004 Artificial Intelligence Assignment 1
+ * Group member: 
+ * Dinh Phuc Ngoc - 784736 
+ * Duy Vu - 741907
+ * 
+ **/
+
 import java.util.ArrayList;
 
 public class Search {
-	private static int DEPTH = 7;
+	private static int DEPTH = 10;
 	private char player;
 	private char opponent;
 	private AlphaBetaNode chosen;
