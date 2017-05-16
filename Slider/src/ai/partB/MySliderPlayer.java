@@ -12,7 +12,6 @@ import aiproj.slider.Move;
 import aiproj.slider.SliderPlayer;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import aiproj.slider.Move;
 import java.lang.String;
 
 public class MySliderPlayer implements SliderPlayer {
