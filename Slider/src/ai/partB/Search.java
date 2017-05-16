@@ -37,7 +37,7 @@ public class Search {
 		if(board.getBoard_size() == 5){
 			DEPTH = 9;
 		}else if (board.getBoard_size() == 6){
-			DEPTH = 8;
+			DEPTH = 9;
 		}else {
 			DEPTH = 7;
 		}

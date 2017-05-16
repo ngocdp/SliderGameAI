@@ -226,12 +226,7 @@ public class Referee {
 				grid[i][0] = Piece.VSLIDER;
 				vsliders++;
 			}
-			
-//			grid[3][3] = Piece.BLOCK;
-//			grid[2][2] = Piece.BLOCK;
-//			grid[1][1] = Piece.BLOCK;
-//			grid[4][4] = Piece.BLOCK;
-//			grid[5][5] = Piece.BLOCK;
+
 
 			// add blocked positions
 			int nblocked = rng.nextInt(3);

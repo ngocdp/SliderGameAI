@@ -47,11 +47,11 @@ public class BoardValue {
 				cellType = board.getSquare(column, row).getType();	
 				
 				if (cellType == MySliderPlayer.TYPE_V) {
-					// values[V_i] += (bsize * Math.abs(column -(int)bsize/2) + bsize * (row+1) * 2);
+					// values[V_i] += (bsize * Math.abs(column -(int)bsize/2) + bsize * (row) * 2);
 					values[V_i] += (bsize * column + bsize * (row+1) * 2);
 				}	
 				if (cellType == MySliderPlayer.TYPE_H) {
-					// values[H_i] += (bsize * Math.abs(row -(int)bsize/2) + bsize * (column+1) * 2);
+					// values[H_i] += (bsize * Math.abs(row -(int)bsize/2) + bsize * (column) * 2);
 					values[H_i] += (bsize * row  + bsize * (column+1) * 2);
 				
 				}		
