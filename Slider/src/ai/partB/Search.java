@@ -11,7 +11,7 @@ package ai.partB;
 import java.util.ArrayList;
 
 public class Search {
-	private static int DEPTH = 10;
+	private static int DEPTH = 9;
 	private char player;
 	private char opponent;
 	private AlphaBetaNode chosen;
@@ -44,9 +44,9 @@ public class Search {
 		// Replaced part as Wiki psudocode: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
 		int evalValue = alphaBeta(new Board(board), DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
 		//System.out.println("evalValue = " + evalValue);
-		if (this.chosen != null) {
-			this.chosen.printNode();
-		}
+//		if (this.chosen != null) {
+//			this.chosen.printNode();
+//		}
 		return this.chosen; 
 }
 		
@@ -171,75 +171,4 @@ public class Search {
 
 		return moves;
 	}
-	
-
-//	for (AlphaBetaNode n : moves) {
-//	
-//	// Simulate next board position on that move
-//	board.updateSquare(n.getFrom(), n.getTo());
-//	
-//	// Evaluate the simulating play
-//	int evalValue = alphaBeta(DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-//	n.setValue(evalValue);
-//	//System.out.println("Alpha-beta value return: " + evalValue);
-//	if (best == null || n.getValue() >= best.getValue()) {
-//		best = n;
-//	}
-//	
-//	// Rollback board
-//	board.updateSquare(n.getTo(), n.getFrom());
-//}
-
-//private int old_alphaBeta(int depth, int alpha, int beta, boolean isMax) {
-//	/* Return evaluation if reaching leaf node or any side won. */
-//	if (depth == 0 || board.finished()) {
-//		System.out.println("Eval()");
-//		return new BoardValue().eval(board, this.player);
-//	}
-//
-//	ArrayList<AlphaBetaNode> moves = generateAllMoves(isMax);
-//
-//	synchronized (this) {
-//		for (final AlphaBetaNode n : moves) {
-//			board.updateSquare(n.getFrom(), n.getTo());
-//			/* Is maximizing player? */
-//			final int finalBeta = beta;
-//			final int finalAlpha = alpha;
-//			final int finalDepth = depth;
-//			final int[] temp = new int[1];
-//
-//			if (depth == 2) {
-//				if (isMax) {
-//					new Thread(new Runnable() {
-//						@Override
-//						public void run() {
-//							temp[0] = Math.max(finalAlpha, old_alphaBeta(finalDepth - 1, finalAlpha, finalBeta, false));
-//						}
-//					}).run();
-//					alpha = temp[0];
-//				} else {
-//					new Thread(new Runnable() {
-//						@Override
-//						public void run() {
-//							temp[0] = Math.min(finalBeta, old_alphaBeta(finalDepth - 1, finalAlpha, finalBeta, true));
-//						}
-//					}).run();
-//					beta = temp[0];
-//				}
-//			} else {
-//				if (isMax)
-//					alpha = Math.max(alpha, old_alphaBeta(depth - 1, alpha, beta, false));
-//				else
-//					beta = Math.min(beta, old_alphaBeta(depth - 1, alpha, beta, true));
-//			}
-//			board.updateSquare(n.getTo(), n.getFrom());
-//
-//			/* Cut-off */
-//			if (beta <= alpha)
-//				break;
-//		}
-//	}
-//	return isMax ? alpha : beta;
-//}
-
 }
