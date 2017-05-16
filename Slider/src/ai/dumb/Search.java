@@ -3,7 +3,7 @@ package ai.partB;
 import java.util.ArrayList;
 
 public class Search {
-	private static int DEPTH = 8;
+	private static int DEPTH = 2;
 	private char player;
 	private char opponent;
 	private AlphaBetaNode chosen;
@@ -19,7 +19,7 @@ public class Search {
 		this.chosen = null;
 		
 		// generate all 
-		//System.out.print("Search all move: ");
+		System.out.print("Search all move: ");
 		ArrayList<AlphaBetaNode> moves = generateAllMoves(board, this.player);
 		
 		if (moves.size() == 0) {
@@ -27,18 +27,12 @@ public class Search {
 			return null;
 		}
 		
-		if (moves.size() == 1) {
-			System.out.println("Only 1 move avail");
-			return moves.get(0);
-		}
-		
 
 		// Replaced part as Wiki psudocode: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
-		int evalValue = alphaBeta(new Board(board), DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
-		//System.out.println("evalValue = " + evalValue);
-		if (this.chosen != null) {
-			this.chosen.printNode();
-		}
+		int evalValue = alphaBeta(new Board(board), DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+		System.out.println("evalValue = " + evalValue);
+		
+		this.chosen.printNode();
 		return this.chosen; 
 }
 		
@@ -47,28 +41,28 @@ public class Search {
 	
 	
 	// Replaced part as Wiki psudocode: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
-	private int alphaBeta(Board board, int depth, int alpha, int beta, boolean isMax, boolean justFinish) {
-		//System.out.println("***** ALPHABETA *****");
-		
-		
-		/* Return evaluation if reaching maximum depth/ leaf node or any side won or terminal node. */
-		if (depth == 0 || board.finished()) {
-			return new BoardValue().eval(board, this.player, justFinish);
-		}
+	private int alphaBeta(Board board, int depth, int alpha, int beta, boolean isMax) {
+		System.out.println("***** ALPHABETA *****");
 		
 		int v;
 		boolean isFinishMove;
+		/* Return evaluation if reaching maximum depth/ leaf node or any side won or terminal node. */
+		if (depth == 0 || board.finished()) {
+			return new BoardValue().eval(board, this.player);
+		}
+		
+		
 		// Maximizer
 		if (isMax) {
 			v = Integer.MIN_VALUE;
-			//System.out.print("MAX: [depth = "+ depth+"]: ");
+			System.out.print("MAX: [depth = "+ depth+"]: ");
 			for (AlphaBetaNode child : this.generateAllMoves(board, this.player)) {
 				
 				// Simulate child node move
 				Board child_board = new Board(board);
 				isFinishMove = child_board.updateSquare(child.getFrom(), child.getTo());
 				
-				int alphaBetaV = this.alphaBeta(child_board, depth-1, alpha, beta, false, isFinishMove);
+				int alphaBetaV = this.alphaBeta(child_board, depth-1, alpha, beta, false);
 				
 				if (alphaBetaV > v ) {
 					v = alphaBetaV;
@@ -86,7 +80,7 @@ public class Search {
 				
 				// Cut-off
 				if (beta <= alpha) {
-					//System.out.println("***** Prune *****");
+					System.out.println("***** Prune *****");
 					break;
 				}
 			}
@@ -98,14 +92,14 @@ public class Search {
 			
 			v = Integer.MAX_VALUE;
 			
-			//System.out.print("MIN: [depth = "+ depth+"]: ");
+			System.out.print("MIN: [depth = "+ depth+"]: ");
 			for (AlphaBetaNode child : this.generateAllMoves(board, this.opponent)) {
 				
 				// Simulate child node move
 				Board child_board = board;
 				isFinishMove = child_board.updateSquare(child.getFrom(), child.getTo());
 				
-				v = Math.min(v, this.alphaBeta(child_board, depth-1, alpha, beta, true, isFinishMove));
+				v = Math.min(v, this.alphaBeta(child_board, depth-1, alpha, beta, true));
 				beta = Math.min(beta, v);
 				
 				// Rollback board: 
@@ -124,12 +118,12 @@ public class Search {
 	
 	// Generate all moves of Player "player" from 'board' condition
 	private ArrayList<AlphaBetaNode> generateAllMoves(Board board, char player) {
-		//System.out.print("{" + player + "}");
+		System.out.print("{" + player + "}");
 		
 		ArrayList<AlphaBetaNode> moves = new ArrayList<AlphaBetaNode>();
 		
 		for (int row = board.getBoard_size() - 1; row >= 0; row--) {
-			for (int column = board.getBoard_size() - 1; column >=0; column--) {
+			for (int column = 0; column < board.getBoard_size(); column++) {
 				Square sqr = board.getSquare(column, row);
 			
 //				char opponent;
@@ -148,7 +142,7 @@ public class Search {
 					for (int[] nxt : Rules.getNextMove(sqr.getType(), sqr.getPosition(), board)) {
 						// only takes moves of the current player:
 						
-						//System.out.print(" (" + sqr.getPosition()[0] + ", " + sqr.getPosition()[1] + ") " + "->(" + nxt[0] + ", " + nxt[1] + ") ||");
+						System.out.print(" (" + sqr.getPosition()[0] + ", " + sqr.getPosition()[1] + ") " + "->(" + nxt[0] + ", " + nxt[1] + ") ||");
 						moves.add(new AlphaBetaNode(sqr.getType(), sqr.getPosition(), nxt));
 						
 					}
@@ -159,7 +153,7 @@ public class Search {
 			}
 		}
 
-		//System.out.print("\n");
+		System.out.print("\n");
 
 		return moves;
 	}
