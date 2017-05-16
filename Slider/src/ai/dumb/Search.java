@@ -3,7 +3,7 @@ package ai.dumb;
 import java.util.ArrayList;
 
 public class Search {
-	private static int DEPTH = 7;
+	private static int DEPTH = 4;
 	private char player;
 	private char opponent;
 	private AlphaBetaNode chosen;
