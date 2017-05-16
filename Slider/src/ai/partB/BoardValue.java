@@ -21,10 +21,10 @@ public class BoardValue {
 				
 				if (cellType == MySliderPlayer.TYPE_V) {
 					// score on position of sliders on board
-					values[V_i] += (bsize * Math.abs(column -(int)bsize/2) + bsize * (row+1) * 2);	
+					values[V_i] += (bsize * Math.abs(1+column -(int)bsize/2) + bsize * (row+1) * 2);	
 				}	
 				if (cellType == MySliderPlayer.TYPE_H) {
-					values[H_i] += (bsize * Math.abs(row -(int)bsize/2) + bsize * (column+1) * 2);
+					values[H_i] += (bsize * Math.abs(1+row -(int)bsize/2) + bsize * (column+1) * 2);
 				
 				}		
 			}
