@@ -22,9 +22,9 @@ public class AlphaBetaNode {
 
     /**
      * Constructor of AlphaBetaNode
-     * @param player: the type of character being moved
-     * @param from: position that character being moved from
-     * @param to: position that character being moved to
+     * @param player the type of character being moved
+     * @param from position that character being moved from
+     * @param to position that character being moved to
      */
     public AlphaBetaNode(char player, int[] from, int[] to) {
         this.player = player;
@@ -61,35 +61,35 @@ public class AlphaBetaNode {
 	}
 
 	/**
-	 * @return the evaluated value of that move when running Alpha Beta Prunning
+	 * @return the evaluated value of that move when running Alpha Beta Pruning
 	 */
 	public int getValue() {
 		return value;
 	}
 
 	/**
-	 * @param player: the character that we want to set in the node
+	 * @param player the character that we want to set in the node
 	 */
 	public void setPlayer(char player) {
 		this.player = player;
 	}
 
 	/**
-	 * @param from: set the position that we want a character to move from
+	 * @param from set the position that we want a character to move from
 	 */
 	public void setFrom(int[] from) {
 		this.from = from;
 	}
 
 	/**
-	 * @param to: set the position that we want a character to move to
+	 * @param to set the position that we want a character to move to
 	 */
 	public void setTo(int[] to) {
 		this.to = to;
 	}
 
 	/**
-	 * @param value: set the evaluated value for the node
+	 * @param value set the evaluated value for the node
 	 */
 	public void setValue(int value) {
 		this.value = value;

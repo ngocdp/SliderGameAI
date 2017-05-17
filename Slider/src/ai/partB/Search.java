@@ -25,8 +25,8 @@ public class Search {
 
 	/**
 	 * Constructor of Search function
-	 * @param player: my character
-	 * @param opponent: opponent's character
+	 * @param player : my character
+	 * @param opponent : opponent's character
 	 */
 	public Search(char player, char opponent) {
 		this.player = player; 
@@ -45,43 +45,33 @@ public class Search {
 		this.chosen = null;
 		
 		// generate all 
-		//System.out.print("Search all move: ");
 		ArrayList<AlphaBetaNode> moves = generateAllMoves(board, this.player);
 		
+		// No moves available
 		if (moves.size() == 0) {
-			System.out.println("No moves avail");
 			return null;
 		}
-		
+		// Only 1 move available
 		if (moves.size() == 1) {
-			System.out.println("Only 1 move avail");
 			return moves.get(0);
 		}
 		
+		alphaBeta(new Board(board), DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
 
-		// Replaced part as Wiki psudocode: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
-		int evalValue = alphaBeta(new Board(board), DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
-		//System.out.println("evalValue = " + evalValue);
-//		if (this.chosen != null) {
-//			this.chosen.printNode();
-//		}
 		return this.chosen; 
 }
 		
-	// Replaced part as Wiki psudocode: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
 	/**
 	 * This function implementing the Alpha Beta Pruning
-	 * @param board: the current board
-	 * @param depth: the depth searching at (depth 0 is the farthest)
-	 * @param alpha: alpha cut-off point, represent the maximum score that the maximizing player is assured of
-	 * @param beta: beta cut-off point, represent the minimum score that the minimizing player is assured of
-	 * @param isMax: 
-	 * @param justFinish: if it is a finishing move, this will help to evaluate the board value
+	 * @param board : the current board
+	 * @param depth : the depth searching at (depth 0 is the farthest)
+	 * @param alpha : alpha cut-off point, represent the maximum score that the maximizing player is assured of
+	 * @param beta : beta cut-off point, represent the minimum score that the minimizing player is assured of
+	 * @param isMax : if the current depth is maximizer
+	 * @param justFinish : if it is a finishing move, this will help to evaluate the board value
 	 * @return the highest evaluated value
 	 */
-	private int alphaBeta(Board board, int depth, int alpha, int beta, boolean isMax, boolean justFinish) {
-		//System.out.println("***** ALPHABETA *****");
-		
+	private int alphaBeta(Board board, int depth, int alpha, int beta, boolean isMax, boolean justFinish) {		
 		
 		/* Return evaluation if reaching maximum depth/ leaf node or any side won or terminal node. */
 		if (depth == 0 || board.finished()) {
@@ -93,13 +83,14 @@ public class Search {
 		// Maximizer
 		if (isMax) {
 			v = Integer.MIN_VALUE;
-			//System.out.print("MAX: [depth = "+ depth+"]: ");
 			for (AlphaBetaNode child : this.generateAllMoves(board, this.player)) {
 				
 				// Simulate child node move
 				Board child_board = new Board(board);
+				
 				isFinishMove = child_board.updateSquare(child.getFrom(), child.getTo());
 				
+				// Explore child node
 				int alphaBetaV = this.alphaBeta(child_board, depth-1, alpha, beta, false, isFinishMove);
 				
 				if (alphaBetaV > v ) {
@@ -109,15 +100,13 @@ public class Search {
 						this.chosen.setValue(v);
 					}
 				}
-				//v = Math.max(v, alphaBetaV);
 				alpha = Math.max(alpha, v);
 				
-				// Rollback board: 
+				// Roll back board: 
 				child_board.rollback(isFinishMove, child.getPlayer(),child.getTo(), child.getFrom());
 				
-				// Cut-off
+				// Cut-off/ Prune
 				if (beta <= alpha) {
-					//System.out.println("***** Prune *****");
 					break;
 				}
 			}
@@ -129,20 +118,20 @@ public class Search {
 			
 			v = Integer.MAX_VALUE;
 			
-			//System.out.print("MIN: [depth = "+ depth+"]: ");
 			for (AlphaBetaNode child : this.generateAllMoves(board, this.opponent)) {
 				
 				// Simulate child node move
 				Board child_board = board;
 				isFinishMove = child_board.updateSquare(child.getFrom(), child.getTo());
 				
+				// Explore child node
 				v = Math.min(v, this.alphaBeta(child_board, depth-1, alpha, beta, true, isFinishMove));
 				beta = Math.min(beta, v);
 				
-				// Rollback board: 
+				// Roll back board: 
 				child_board.rollback(isFinishMove, child.getPlayer(),child.getTo(), child.getFrom());
 				
-				// Cut-off
+				// Cut-off/ Prune
 				if (beta <= alpha) {
 					break;
 				}
@@ -153,12 +142,11 @@ public class Search {
 
 	/**
 	 * Generate all moves of a player from board condition
-	 * @param board: the current board
-	 * @param player: the character that we want to generate move from H/V
-	 * @return : an arraylist of all possible move of that character on the board
+	 * @param board : the current board
+	 * @param player : the character that we want to generate move from H/V
+	 * @return An arraylist of all possible move of that character on the board
 	 */
 	private ArrayList<AlphaBetaNode> generateAllMoves(Board board, char player) {
-		//System.out.print("{" + player + "}");
 		
 		ArrayList<AlphaBetaNode> moves = new ArrayList<AlphaBetaNode>();
 		
@@ -169,7 +157,6 @@ public class Search {
 				if ((sqr.getType() == player) && (sqr.getType() == MySliderPlayer.TYPE_H || sqr.getType() == MySliderPlayer.TYPE_V )) {
 					for (int[] nxt : Rules.getNextMove(sqr.getType(), sqr.getPosition(), board)) {
 						// only takes moves of the current player:
-						//System.out.print(" (" + sqr.getPosition()[0] + ", " + sqr.getPosition()[1] + ") " + "->(" + nxt[0] + ", " + nxt[1] + ") ||");
 						moves.add(new AlphaBetaNode(sqr.getType(), sqr.getPosition(), nxt));
 					}
 				}			

@@ -20,11 +20,10 @@ public class Square {
 	private boolean occupied;
 
 	/**
-	 * Constructor of Square
-	 * @param position: a array storing the position of the square on the board with structure [column, row]
-	 * @param type: the character appear on that square (H/V/B/F)
+	 * Constructor of Square. We also assign the occupy status depend on the type of the square
+	 * @param position : an array storing the position of the square on the board with structure [column, row]
+	 * @param type : the character appear on that square (H/V/B/F)
 	 * 
-	 * 	We also assign the occupy status depend on the type of the square
 	 */
 	public Square(int[] position, char type) {
 		this.type = type;
@@ -48,7 +47,7 @@ public class Square {
 
 	/**
 	 * Constructor of Square
-	 * @param sqr: an existed square
+	 * @param sqr : an existing square
 	 */
 	public Square(Square sqr) {
 		this.setPosition(sqr.getPosition());
@@ -65,35 +64,35 @@ public class Square {
 
 	/**
 	 * set type for a square
-	 * @param type: name of type (H/V/B/F)
+	 * @param type : name of type (H/V/B/F)
 	 */
 	public void setType(char type) {
 		this.type = type;
 	}
 
 	/**
-	 * @return if the square is being occupied or free
+	 * @return If the square is being occupied or free
 	 */
 	public boolean isOccupied() {
 		return occupied;
 	}
 
 	/**
-	 * @param occupied:the occupy status for the square 
+	 * @param occupied :the occupy status for the square 
 	 */
 	public void setOccupied(boolean occupied) {
 		this.occupied = occupied;
 	}
 
 	/**
-	 * @return the position of the square 
+	 * @return The position of the square 
 	 */
 	public int[] getPosition() {
 		return position;
 	}
 
 	/**
-	 * @param position: the position to set
+	 * @param position : the position to set
 	 */
 	public void setPosition(int[] position) {
 		this.position = position;

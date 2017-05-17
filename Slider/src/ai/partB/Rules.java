@@ -22,11 +22,11 @@ public class Rules {
     private static Board board;
     
     /**
-     * this function will generate all possible move of a character on the board based on its current position
-     * @param type: type of character being moved
-     * @param pos: its current position
-     * @param board: the current board
-     * @return an arraylist of possible moves of that character; return null if there are no possible move
+     * This function will generate all possible move of a character on the board based on its current position
+     * @param type : type of character being moved
+     * @param pos : its current position
+     * @param board : the current board
+     * @return An arraylist of possible moves of that character; return null if there are no possible move
      */
     public static ArrayList<int[]> getNextMove(char type, int[] pos, Board board) {
         Rules.pos = pos;
@@ -43,7 +43,7 @@ public class Rules {
     }
 	
     /**
-     * @return the possible moves of a character V
+     * @return The possible moves of a character V
      */
     private static ArrayList<int[]> vRules() {
         ArrayList<int[]> moves = new ArrayList<int[]>();
@@ -55,14 +55,14 @@ public class Rules {
             
             if (e[1] == board.getBoard_size()) // check if it is a winning move, make that move a legal move
 				moves.add(e);
-			else if (board.isEmpty(e)) // check if the new position is free/unoccupied, else it is a illigal move
+			else if (board.isEmpty(e)) // check if the new position is free/unoccupied, else it is a illegal move
 				moves.add(e);
         }
         return moves;
     }
     
 	/**
-	 * @return the possible moves of character H
+	 * @return The possible moves of character H
 	 */
 	private static ArrayList<int[]> hRules() {
 		ArrayList<int[]> moves = new ArrayList<int[]>();
@@ -74,7 +74,7 @@ public class Rules {
 			
 			if (e[0] == board.getBoard_size()) // check if it is a winning move, make that move a legal move
 				moves.add(e);
-			else if (board.isEmpty(e)) // check if the new position is free/unoccupied, else it is a illigal move
+			else if (board.isEmpty(e)) // check if the new position is free/unoccupied, else it is a illegal move
 				moves.add(e);
 		}
 		return moves;

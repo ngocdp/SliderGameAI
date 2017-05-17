@@ -15,7 +15,7 @@ import java.util.Scanner;
 import java.lang.String;
 
 /**
- * MySliderPlayer Class: this is the main class of this project. It will implement the SliderPlayer.
+ * MySliderPlayer Class: This is the main class of this project. It will implement the SliderPlayer.
  */
 
 public class MySliderPlayer implements SliderPlayer {
@@ -38,6 +38,7 @@ public class MySliderPlayer implements SliderPlayer {
 	public void init(int dimension, String board_arrangment, char player) {
 		// determine the my player and opponent player
 		this.player = player;
+		
 		if (player == TYPE_H)
 			this.opponent = TYPE_V;
 		else if (player == TYPE_V)
@@ -72,8 +73,6 @@ public class MySliderPlayer implements SliderPlayer {
 
 	@Override
 	public void update(Move move) {
-		//System.out.print("Before: ");
-		//board.printBoard();
 		// if no move is passed from Referee, return null (no change to the board)
 		if (move == null) {
 			return;
@@ -101,23 +100,13 @@ public class MySliderPlayer implements SliderPlayer {
 				moveSquare(oldPos, newPos, board);
 			}
 		}
-		
-//		System.out.print("After: ");
-//		board.printBoard();
-		
-		//this.board.updateFinishArea();
-		//System.out.println("After Area clear: ");
-		//board.printMainBoard();
-		
-		
-
 	}
 	
 	/**
 	 * Moving the Square from a position to other position on the board
-	 * @param oldPos: old position
-	 * @param newPos: new position that we want it to move to
-	 * @param board: the current board
+	 * @param oldPos : old position
+	 * @param newPos : new position that we want it to move to
+	 * @param board : the current board
 	 */
 	public void moveSquare(int[] oldPos, int[] newPos, Board board) {
 		board.updateSquare(oldPos, newPos);
@@ -135,11 +124,8 @@ public class MySliderPlayer implements SliderPlayer {
 			return null;
 		} else {
 			int[] from = result.getFrom();
-			int[] to = result.getTo(); // getTo()???
+			int[] to = result.getTo(); 
 			
-			// PRINT FROM AND TO:
-			//System.out.println("From ("+ from[0] + "," + from[1] + ") to (" + to[0] + "," + to[1] + ")" );
-
 			Move move; 
 
 			if (from[1] > to[1]) {
@@ -158,14 +144,14 @@ public class MySliderPlayer implements SliderPlayer {
 	}
 	
 	/**
-	 * @return the character of my player
+	 * @return The character of my player
 	 */
 	public char getPlayer() {
 		return player;
 	}
 
 	/**
-	 * @return the character of opponent
+	 * @return The character of opponent
 	 */
 	public char getOpponent() {
 		return opponent;

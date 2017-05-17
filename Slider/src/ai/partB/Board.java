@@ -11,7 +11,7 @@ package ai.partB;
 /**
  * Board class: This class is the structure of the Board that our AI will be using to stimulating the game. It will
  * keep track of all the squares on the board and the details of them. Our board got an extra winning area for easier 
- * searching and rolling back when doing Alpha Beta Prunning.
+ * searching and rolling back when doing Alpha Beta Pruning.
  */
 
 public class Board {
@@ -23,7 +23,7 @@ public class Board {
 
 	/**
 	 * Constructor of Board
-	 * @param dimension: the size of the board
+	 * @param dimension the size of the board
 	 */
 	public Board(int dimension) {
 		this.board_size = dimension;
@@ -42,22 +42,18 @@ public class Board {
 	
 	/**
 	 * Update the board after a move being made and it will tell if it is a finishing move of that character
-	 * @param oldPos: the position of character being made to move
-	 * @param newPos: the position that character being moved to 
+	 * @param oldPos the position of character being made to move
+	 * @param newPos the position that character being moved to 
 	 * @return true if it is a finishing move, else false
 	 */
 	public boolean updateSquare(int[] oldPos, int[] newPos) {
 		boolean isFinishMove = false;
-		//System.out.println("** UPDATE SQUARE **");
 
 		Square orig = getSquare(oldPos);
-		//this.printBoard();
 		// Check if it is winning move
 		if ((orig.getType() == MySliderPlayer.TYPE_H && newPos[0] == board_size)
 				|| (orig.getType() == MySliderPlayer.TYPE_V && newPos[1] == board_size)) {
-			
-			//System.out.println("===> EXIT/ WINNING MOVE");
-			
+						
 			// update old position
 			cells[oldPos[0]][oldPos[1]] = new Square(oldPos, MySliderPlayer.TYPE_F);
 			cells[newPos[0]][newPos[1]] = orig;
@@ -77,42 +73,28 @@ public class Board {
 			orig.position = newPos;
 		}
 		
-		this.printBoard();
-		//System.out.println("** H_Sq = " + this.hsquare + " V_Sq = " + this.vsquare + " **");
-		//System.out.println("** FINISH UPDATE SQUARE **");
 		return isFinishMove;
 
 	}
 	
+	/**
+	 * Print the current board
+	 */
 	public void printBoard() {
-		//System.out.println("printBoard func:");
+		System.out.println("printBoard func:");
 		for (int j = board_size; j >= 0; j--) {
 			for (int i = 0; i <=  board_size; i++) {
 				
-				//System.out.print(cells[i][j].getType());
-				//System.out.print(' ');
+				System.out.print(cells[i][j].getType());
+				System.out.print(' ');
 			}
-			//System.out.print('\n');
+			System.out.print('\n');
 		}
 	}
-	
-	public void printMainBoard() {
-		//System.out.println("printBoard func:");
-		for (int j = board_size; j >= 0; j--) {
-			for (int i = 0; i <=  board_size; i++) {
-				
-				//System.out.print(cells[i][j].getType());
-				//System.out.print(' ');
-			}
-			//System.out.print('\n');
-		}
-	}
-	
-	
-	
+		
 	/**
 	 * This function will create an extra row on top and extra column on the right of the board and we call it 
-	 * finishing area for V and H. This would help us futher in storing the wining move and able to roll back after 
+	 * finishing area for V and H. This would help us further in storing the wining move and able to roll back after 
 	 * that when doing Alpha Beta Pruning
 	 * 
 	 * @param isRollback : We set it true when we start doing roll back; we will make all upper row be V and all 
@@ -141,14 +123,14 @@ public class Board {
 	
 	/**
 	 * This function will roll back a previous move on the board
-	 * @param isFinishMove : if that was a finishing move
-	 * @param player : type of character making that move
-	 * @param oldPos : the position of the piece we would like to roll back
-	 * @param newPos : the position of the piece we would like to roll back to
+	 * @param isFinishMove  if that was a finishing move
+	 * @param player  type of character making that move
+	 * @param oldPos  the position of the piece we would like to roll back
+	 * @param newPos  the position of the piece we would like to roll back to
 	 */
 	public void rollback(boolean isFinishMove, char player, int[] oldPos, int[] newPos) {
-		//System.out.println("***** ROLLBACK *****");
 		this.updateFinishArea(true);
+		
 		if (isFinishMove) {
 			if (player == MySliderPlayer.TYPE_V) {
 				this.vsquare++;
@@ -156,16 +138,14 @@ public class Board {
 				this.hsquare++;
 			}
 		}
-		
 		this.updateSquare(oldPos, newPos);
-		
 		this.updateFinishArea(false);		
 	}
 	
 	/**
 	 * This function check if a position is within board field
-	 * @param position : the position to check
-	 * @return : true if that position is within board field, else false
+	 * @param position  the position to check
+	 * @return  true if that position is within board field, else false
 	 */
 	public boolean isInside(int[] position) {
 		return isInside(position[0], position[1]);
@@ -175,7 +155,7 @@ public class Board {
 	 * This function check if a position is within board field
 	 * @param x : column
 	 * @param y : row
-	 * @return :true if that position is within board field, else false
+	 * @return true if that position is within board field, else false
 	 */
 	public boolean isInside(int x, int y) {
 		return !(x < 0 || x >= board_size || y < 0 || y >= board_size);
@@ -183,8 +163,8 @@ public class Board {
 
 	/**
 	 * This function check if the square at a position is empty/free or being occupied 
-	 * @param position: the position of the square to check
-	 * @return : true if the square is empty/free, else false
+	 * @param position : the position of the square to check
+	 * @return true if the square is empty/free, else false
 	 */
 	public boolean isEmpty(int[] position) {
 		return isEmpty(position[0], position[1]);
@@ -201,7 +181,7 @@ public class Board {
 	}
 	
 	/**
-	 * this function will check if the game has been done when either one of the player has no piece left on the board
+	 * This function will check if the game has been done when either one of the player has no piece left on the board
 	 * @return true if the game has finished 
 	 */
 	public boolean finished() {
@@ -210,8 +190,8 @@ public class Board {
 
 	/**
 	 * This function will give the details the square at given position
-	 * @param pos: the position to get the square
-	 * @return : the details of the Square in Square type
+	 * @param pos : the position to get the square
+	 * @return the details of the Square in Square type
 	 */
 	public Square getSquare(int[] pos) {
 		return getSquare(pos[0], pos[1]);
@@ -221,7 +201,7 @@ public class Board {
 	 * This function will give the details the square at given position on the board 
 	 * @param x : column
 	 * @param y : row
-	 * @return : the details of the Square in Square type
+	 * @return the details of the Square in Square type
 	 */
 	public Square getSquare(int x, int y) {
 		return cells[x][y];
@@ -235,7 +215,7 @@ public class Board {
 	}
 	
 	/**
-	 * @param board_size: the size of the board to set to
+	 * @param board_size : the size of the board to set to
 	 */
 	public void setBoard_size(int board_size) {
 		this.board_size = board_size;
@@ -249,7 +229,7 @@ public class Board {
 	}
 
 	/**
-	 * @param hsquare: the number of H squares to set
+	 * @param hsquare : the number of H squares to set
 	 */
 	public void setHsquare(int hsquare) {
 		this.hsquare = hsquare;
@@ -263,7 +243,7 @@ public class Board {
 	}
 
 	/**
-	 * @param vsquare: the number of V squares to set
+	 * @param vsquare : the number of V squares to set
 	 */
 	public void setVsquare(int vsquare) {
 		this.vsquare = vsquare;
