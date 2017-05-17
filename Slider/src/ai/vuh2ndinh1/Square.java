@@ -1,4 +1,4 @@
-package ai.partB;
+package ai.vuh2ndinh1;
 
 /**
  * COMP30004 Artificial Intelligence Assignment (Part B)
