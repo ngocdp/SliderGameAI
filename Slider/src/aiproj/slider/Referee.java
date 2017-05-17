@@ -59,7 +59,7 @@ public class Referee {
 		 * * * * now, play the game!
 		 */
 
-		int turn = Player.V;
+		int turn = Player.H;
 		Move previousMove = null;
 		String message = null;
 
@@ -226,28 +226,29 @@ public class Referee {
 				grid[i][0] = Piece.VSLIDER;
 				vsliders++;
 			}
+			grid[1][1] = Piece.BLOCK;
+			grid[2][2] = Piece.BLOCK;
 
-
-			// add blocked positions
-			int nblocked = rng.nextInt(3);
-			if (nblocked == 0) {
-				// no blocked positions
-			} else {
-				// one or two blocked positions:
-				int i = 1 + rng.nextInt(n - 2);
-				int j = 1 + rng.nextInt(n - 2);
-				if (nblocked == 1) {
-					grid[i][j] = Piece.BLOCK;
-				} else if (nblocked == 2) {
-					if (rng.nextBoolean()) {
-						grid[i][i] = Piece.BLOCK;
-						grid[j][j] = Piece.BLOCK;
-					} else {
-						grid[i][j] = Piece.BLOCK;
-						grid[j][i] = Piece.BLOCK;
-					}
-				}			
-			}
+//			// add blocked positions
+//			int nblocked = rng.nextInt(3);
+//			if (nblocked == 0) {
+//				// no blocked positions
+//			} else {
+//				// one or two blocked positions:
+//				int i = 1 + rng.nextInt(n - 2);
+//				int j = 1 + rng.nextInt(n - 2);
+//				if (nblocked == 1) {
+//					grid[i][j] = Piece.BLOCK;
+//				} else if (nblocked == 2) {
+//					if (rng.nextBoolean()) {
+//						grid[i][i] = Piece.BLOCK;
+//						grid[j][j] = Piece.BLOCK;
+//					} else {
+//						grid[i][j] = Piece.BLOCK;
+//						grid[j][i] = Piece.BLOCK;
+//					}
+//				}			
+//			}
 		}
 
 		/** represent a board as text for rendering */

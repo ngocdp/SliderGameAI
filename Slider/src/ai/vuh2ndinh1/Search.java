@@ -46,7 +46,7 @@ public class Search {
 		
 		// generate all 
 		ArrayList<AlphaBetaNode> moves = generateAllMoves(board, this.player);
-		
+
 		// No moves available
 		if (moves.size() == 0) {
 			return null;
@@ -57,6 +57,9 @@ public class Search {
 		}
 		
 		alphaBeta(new Board(board), DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true, false);
+		if (this.chosen == null && moves.size() >=2) {
+			return moves.get(0);
+		}
 
 		return this.chosen; 
 }
