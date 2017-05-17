@@ -39,7 +39,7 @@ public class Search {
 		}else if (board.getBoard_size() == 6){
 			DEPTH = 9;
 		}else {
-			DEPTH = 7;
+			DEPTH = 9;
 		}
 		
 		this.chosen = null;
