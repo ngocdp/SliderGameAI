@@ -47,13 +47,23 @@ public class BoardValue {
 				cellType = board.getSquare(column, row).getType();	
 				
 				if (cellType == MySliderPlayer.TYPE_V) {
-					// values[V_i] += (bsize * Math.abs(column -(int)bsize/2) + bsize * (row) * 2);
-					values[V_i] += (bsize * column + bsize * (row+1) * 2);
+					// score on position of sliders on board
+					values[V_i] += (bsize * column + bsize * (row+1) * bsize);	
+					
+					// add direct blocking point move: exist H on the direct left
+					if (column-1>0 && board.getSquare(column-1, row).getType() == MySliderPlayer.TYPE_H) {
+						values[V_i] += bsize*bsize*bsize*column + bsize;
+					}
 				}	
 				if (cellType == MySliderPlayer.TYPE_H) {
-					// values[H_i] += (bsize * Math.abs(row -(int)bsize/2) + bsize * (column) * 2);
-					values[H_i] += (bsize * row  + bsize * (column+1) * 2);
-				
+					// score on position of sliders on board
+					values[H_i] += (bsize * row + bsize * (column+1) * bsize);
+
+					// add direct blocking point move: exist V on the direct down
+					if (row-1>0 && board.getSquare(column, row-1).getType() == MySliderPlayer.TYPE_V) {
+						values[H_i] += bsize*bsize*bsize*row + bsize;
+					}
+					
 				}		
 			}
 		}
@@ -89,32 +99,4 @@ public class BoardValue {
 		}
 	}
 	
-//	public int eval(Board board, char player) {
-//		int value = 0;
-//		char cellType;
-//		int bsize = board.getBoard_size();
-//		for (int row = 0; row < bsize; row++) {
-//			for (int column = 0; column < bsize; column++) {
-//				cellType = board.getSquare(column, row).getType();
-//				if (cellType == player) {
-//					if (cellType == MySliderPlayer.TYPE_V) {
-//						// score on position of sliders on board
-//						value += (bsize * column + bsize * row * 2);	
-//					}	
-//					else if (cellType == MySliderPlayer.TYPE_H) {
-//						value += (bsize * row + bsize * column * 2);
-//					}
-//				}		
-//			}
-//		}
-//		
-//		// add score on remaining sliders on board:
-//		if (player == MySliderPlayer.TYPE_V) {
-//			value += ((bsize-1) - board.getHsquare()) * bsize*2;
-//		}	
-//		else if (player == MySliderPlayer.TYPE_H) {
-//			value += ((bsize-1) - board.getHsquare()) * bsize*2;
-//		}
-//		return value;
-//	}
 }
