@@ -21,7 +21,9 @@ public class BoardValue {
 				
 				if (cellType == player && cellType == MySliderPlayer.TYPE_V) {
 					// score on position of sliders on board
-					values[V_i] += (bsize * Math.abs(1+column -(int)bsize/2) + bsize * (row+1) * 2);	
+					//values[V_i] += (bsize * Math.abs(1+column -(int)bsize/2) + bsize * (row+1) * 2);	
+					values[V_i] += (bsize * column + bsize * (row+1) * bsize);	
+
 					
 					// add direct blocking point move: exist H on the direct left
 					if (column-1>0 && board.getSquare(column-1, row).getType() == MySliderPlayer.TYPE_H) {
@@ -33,7 +35,10 @@ public class BoardValue {
 					
 				}	
 				if (cellType == player && cellType == MySliderPlayer.TYPE_H) {
-					values[H_i] += (bsize * Math.abs(1+row -(int)bsize/2) + bsize * (column+1) * 2);
+					//values[H_i] += (bsize * Math.abs(1+row -(int)bsize/2) + bsize * (column+1) * 2);
+					
+					values[H_i] += (bsize * row + bsize * (column+1) * bsize);
+
 					
 					
 					// add direct blocking point move: exist V on the direct down

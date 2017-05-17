@@ -93,7 +93,7 @@ public class Referee {
 
 			render(board);
 			
-			if (times[turn] / 1000000 >= 15000) {
+			if (times[turn] / 1000000 >= 30000) {
 				System.out.println("Time constraint break for "+ turn + " at: " + times[turn]/ 1000000);
 				System.exit(0);
 			}
@@ -150,7 +150,7 @@ public class Referee {
 			if (args.length > 3) {
 				this.delay = Integer.parseInt(args[3]);
 			} else {
-				this.delay = 200; // default to zero (which will be ignored)
+				this.delay = 0; // default to zero (which will be ignored)
 			}
 
 			// check dimension of board
